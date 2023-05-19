@@ -13,6 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 100vh;
 }
 
 header {
@@ -28,14 +29,14 @@ header {
 }
 
 main {
-  padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  margin: 20px;
+  margin: 50px 100px;
 }
 
 section {
   flex: 1 1 100%;
+
   margin-bottom: 30px;
 
   &:last-child {
@@ -66,6 +67,7 @@ form {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1.2rem;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
@@ -91,18 +93,21 @@ form {
 #travel-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
 }
 
 .trip-item {
-  flex: 0 0 calc(30% - 20px);
+  position: relative;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-5px);
@@ -119,6 +124,48 @@ form {
   p {
     margin: 0;
     font-size: 1.2rem;
+  }
+
+  .delete-button {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken(red, 10%);
+    }
+  }
+
+  .info-button {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: $secondary-color;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
   }
 }
 
@@ -152,10 +199,6 @@ footer {
   border-color: $secondary-color;
   background-color: $background-color;
 
-  &:hover {
-    background-color: lighten($secondary-color, 20%);
-  }
-
   h3 {
     color: $secondary-color;
   }
@@ -163,4 +206,54 @@ footer {
 
 footer {
   background-color: $secondary-color;
+}
+
+// Media Queries
+@media only screen and (max-width: 600px) {
+  // Stiluri pentru ecranul mobil
+  body {
+    font-size: 14px;
+  }
+
+  section {
+    margin-bottom: 20px;
+  }
+
+  form {
+    margin-bottom: 10px;
+  }
+
+  .trip-item {
+    flex: 0 0 100%;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  // Stiluri pentru tableta
+  body {
+    font-size: 16px;
+  }
+
+  section {
+    margin-bottom: 30px;
+  }
+
+  .trip-item {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  // Stiluri pentru desktop
+  body {
+    font-size: 18px;
+  }
+
+  section {
+    margin-bottom: 40px;
+  }
+
+  .trip-item {
+    flex: 0 0 calc(31.93% - 20px);
+  }
 }
