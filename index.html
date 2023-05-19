@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Planificare călătorii</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Planificare călătorii</h1>
+    </header>
+
+    <main>
+      <section id="destinations">
+        <h2>Destinații disponibile</h2>
+        <ul id="destination-list"></ul>
+      </section>
+
+      <section id="planner">
+        <h2>Planificare călătorie</h2>
+        <form id="travel-form">
+          <label for="destination-input">Destinație:</label>
+          <input type="text" id="destination-input" />
+
+          <label for="start-date-input">Data de început:</label>
+          <input type="date" id="start-date-input" />
+
+          <label for="end-date-input">Data de sfârșit:</label>
+          <input type="date" id="end-date-input" />
+
+          <button type="submit">Adaugă</button>
+        </form>
+
+        <div id="travel-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 Planificare călătorii</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
