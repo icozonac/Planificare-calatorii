@@ -26,6 +26,7 @@ header {
     margin: 0;
     font-size: 2rem;
   }
+
 }
 
 main {
@@ -45,6 +46,11 @@ section {
 
   h2 {
     font-size: 1.8rem;
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 1.6rem;
     color: $primary-color;
     margin-bottom: 10px;
   }
@@ -86,6 +92,21 @@ form {
 
     &:hover {
       background-color: darken($primary-color, 10%);
+    }
+  }
+
+  select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
     }
   }
 }
@@ -147,7 +168,7 @@ form {
     }
   }
 
-  .info-button {
+  .add-button {
     cursor: pointer;
     position: absolute;
     bottom: 10px;
@@ -155,7 +176,7 @@ form {
     background-color: $secondary-color;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 7px 12px;
     border-radius: 4px;
     font-size: 1rem;
     display: flex;
@@ -186,7 +207,8 @@ footer {
   background-color: $secondary-color;
   color: white;
 
-  h2 {
+  h2,
+  h3 {
     color: white;
   }
 

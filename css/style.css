@@ -32,6 +32,10 @@ section {
     font-size: 1.8rem;
     color: #3366cc;
     margin-bottom: 10px; }
+  section h3 {
+    font-size: 1.6rem;
+    color: #3366cc;
+    margin-bottom: 10px; }
 
 form {
   margin-bottom: 20px; }
@@ -62,6 +66,17 @@ form {
     font-size: 1.2rem; }
     form button[type="submit"]:hover {
       background-color: #2952a3; }
+  form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    box-sizing: border-box; }
+    form select:focus {
+      outline: none;
+      border-color: #3366cc; }
 
 #travel-list {
   display: flex;
@@ -108,7 +123,7 @@ form {
     transition: all 0.3s ease; }
     .trip-item .delete-button:hover {
       background-color: #cc0000; }
-  .trip-item .info-button {
+  .trip-item .add-button {
     cursor: pointer;
     position: absolute;
     bottom: 10px;
@@ -116,14 +131,14 @@ form {
     background-color: #ff9900;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 7px 12px;
     border-radius: 4px;
     font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease; }
-    .trip-item .info-button:hover {
+    .trip-item .add-button:hover {
       background-color: #cc7a00; }
 
 footer {
@@ -138,7 +153,8 @@ footer {
 .secondary-section {
   background-color: #ff9900;
   color: white; }
-  .secondary-section h2 {
+  .secondary-section h2,
+  .secondary-section h3 {
     color: white; }
   .secondary-section button[type="submit"] {
     background-color: #ff9900; }
