@@ -2,13 +2,15 @@ const canvas = document.getElementById("mapCanvas");
 const ctx = canvas.getContext("2d");
 
 const scale = 0.5;
-const locations = [];
+let locations = [];
 
 // Calculate the scaled map dimensions
 const { width, height } = canvas.getBoundingClientRect();
 
 // Draw the initial map
 drawMap();
+
+drawMapFromSessionStorage();
 
 // Add click event listener to canvas
 canvas.addEventListener("click", (event) => {
@@ -76,6 +78,13 @@ function drawLabel(x, y, text) {
   ctx.fillText(text, x, y - 15);
 }
 
+function drawMapFromSessionStorage() {
+  const savedLocations = sessionStorage.getItem("locations");
+  locations = savedLocations ? JSON.parse(savedLocations) : [];
+
+  drawMap();
+}
+
 // Add submit event listener to form
 const form = document.getElementById("cityForm");
 form.addEventListener("submit", (event) => {
@@ -87,6 +96,8 @@ form.addEventListener("submit", (event) => {
     // Add the city name to the last location
     locations[locations.length - 1].name = cityName;
 
+    sessionStorage.setItem("locations", JSON.stringify(locations));
+
     // Reset the form
     form.reset();
 
@@ -94,8 +105,3 @@ form.addEventListener("submit", (event) => {
     drawMap();
   }
 });
-
-sessionStorage.setItem("locations", JSON.stringify(locations));
-
-const savedLocations = sessionStorage.getItem("locations");
-locations = savedLocations ? JSON.parse(savedLocations) : [];
