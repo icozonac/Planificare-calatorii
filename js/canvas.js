@@ -83,5 +83,3 @@ sessionStorage.setItem("locations", JSON.stringify(locations));
 
 const savedLocations = sessionStorage.getItem("locations");
 locations = savedLocations ? JSON.parse(savedLocations) : [];
-
-// You can use the retrieved locations array in your code
