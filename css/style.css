@@ -24,9 +24,6 @@ header {
     border: 1px solid #000;
     width: 600px;
     height: 400px; }
-  #map button {
-    position: relative;
-    z-index: 500; }
 
 main {
   display: flex;

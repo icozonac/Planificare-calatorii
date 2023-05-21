@@ -1,30 +1,39 @@
-// async function fetchUsers() {
-//   try {
-//     const response = await fetch("https://randomuser.me/api/?results=5");
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok");
-//     }
-//     const data = await response.json();
-//     return data.results;
-//   } catch (error) {
-//     console.error("Error fetching users:", error);
-//     throw error;
-//   }
-// }
+async function fetchUsers() {
+  try {
+    const response = await fetch("https://randomuser.me/api/?results=5");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+}
 
-// fetchUsers()
-//   .then((users) => {
-//     const userListElement = document.getElementById("userList");
-//     const ul = document.createElement("ul");
+fetchUsers()
+  .then((users) => {
+    const userListElement = document.getElementById("userList");
 
-//     users.forEach((user) => {
-//       const li = document.createElement("li");
-//       li.textContent = `${user.name.first} ${user.name.last}`;
-//       ul.appendChild(li);
-//     });
+    users.forEach((user) => {
+      const userCard = document.createElement("div");
+      userCard.classList.add("user-card");
 
-//     userListElement.appendChild(ul);
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error);
-//   });
+      const userImage = document.createElement("img");
+      userImage.classList.add("user-image");
+      userImage.src = user.picture.medium;
+      userImage.alt = "User Image";
+      userCard.appendChild(userImage);
+
+      const userName = document.createElement("span");
+      userName.classList.add("user-name");
+      userName.textContent = `${user.name.first} ${user.name.last}`;
+      userCard.appendChild(userName);
+
+      userListElement.appendChild(userCard);
+    });
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
