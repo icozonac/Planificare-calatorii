@@ -5,7 +5,6 @@
     <title>Planificare călătorii</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/sprites.css" />
-    <link rel="stylesheet" href="css/svg.css" />
     <link rel="icon" href="assets/favicon.png" type="image/x-icon" />
   </head>
   <body>
@@ -468,13 +467,13 @@
         <h2>Planificare călătorie</h2>
         <form id="travel-form">
           <label for="destination-input">Destinație:</label>
-          <input type="text" id="destination-input" />
+          <input type="text" id="destination-input" required />
 
           <label for="start-date-input">Data de început:</label>
-          <input type="date" id="start-date-input" />
+          <input type="date" id="start-date-input" required />
 
           <label for="end-date-input">Data de sfârșit:</label>
-          <input type="date" id="end-date-input" />
+          <input type="date" id="end-date-input" required />
 
           <h3>Transport</h3>
           <label for="transport-input">Tipul transportului:</label>
@@ -501,12 +500,22 @@
       </section>
     </main>
 
+    <div id="map">
+      <canvas id="mapCanvas"></canvas>
+      <form id="cityForm">
+        <label for="cityName">Nume oraș:</label>
+        <input type="text" id="cityName" required />
+        <button type="submit">Adaugă oraș</button>
+      </form>
+    </div>
+
     <div class="ryu"></div>
 
     <footer>
       <p>&copy; 2023 Planificare călătorii</p>
     </footer>
 
+    <script src="js/canvas.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

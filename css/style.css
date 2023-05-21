@@ -18,6 +18,16 @@ header {
     margin: 0;
     font-size: 2rem; }
 
+#map {
+  margin: auto; }
+  #map #mapCanvas {
+    border: 1px solid #000;
+    width: 600px;
+    height: 400px; }
+  #map button {
+    position: relative;
+    z-index: 500; }
+
 main {
   display: flex;
   flex-wrap: wrap;

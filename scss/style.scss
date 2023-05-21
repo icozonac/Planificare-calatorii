@@ -26,7 +26,21 @@ header {
     margin: 0;
     font-size: 2rem;
   }
+}
 
+#map {
+  margin: auto;
+
+  #mapCanvas {
+    border: 1px solid #000;
+    width: 600px;
+    height: 400px;
+  }
+
+  button {
+    position: relative;
+    z-index: 500;
+  }
 }
 
 main {
