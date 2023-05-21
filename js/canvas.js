@@ -31,6 +31,15 @@ function drawLocation(x, y) {
   ctx.fill();
 }
 
+function drawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
 function drawMap() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#f2f2f2";
@@ -42,6 +51,13 @@ function drawMap() {
     width - 100 * scale,
     height - 100 * scale
   );
+
+  // Draw lines between consecutive points
+  for (let i = 1; i < locations.length; i++) {
+    const { x: x1, y: y1 } = locations[i - 1];
+    const { x: x2, y: y2 } = locations[i];
+    drawLine(x1, y1, x2, y2);
+  }
 
   locations.forEach(({ x, y, name }) => {
     drawLocation(x, y);
