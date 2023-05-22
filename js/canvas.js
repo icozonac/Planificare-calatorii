@@ -4,24 +4,24 @@ const ctx = canvas.getContext("2d");
 const scale = 0.5;
 let locations = [];
 
-// Calculate the scaled map dimensions
+// Calculează dimensiunile hărții scalate
 const { width, height } = canvas.getBoundingClientRect();
 
-// Draw the initial map
+// Desenează harta inițială
 drawMap();
 
 drawMapFromSessionStorage();
 
-// Add click event listener to canvas
+// Adaugă un eveniment de click pe canvas
 canvas.addEventListener("click", (event) => {
   const { left, top } = canvas.getBoundingClientRect();
   const x = event.clientX - left;
   const y = event.clientY - top;
 
-  // Add the location to the list of locations without the city name
+  // Adaugă locația în lista de locații fără numele orașului
   locations.push({ x, y });
 
-  // Draw the updated map
+  // Desenează harta actualizată
   drawMap();
 });
 
@@ -54,7 +54,7 @@ function drawMap() {
     height - 100 * scale
   );
 
-  // Draw lines between consecutive points
+  // Desenează linii între punctele consecutive
   for (let i = 1; i < locations.length; i++) {
     const { x: x1, y: y1 } = locations[i - 1];
     const { x: x2, y: y2 } = locations[i];
@@ -85,7 +85,7 @@ function drawMapFromSessionStorage() {
   drawMap();
 }
 
-// Add submit event listener to form
+// Adaugă un eveniment de submit la formular
 const form = document.getElementById("cityForm");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -93,15 +93,15 @@ form.addEventListener("submit", (event) => {
   const cityName = cityNameInput.value.trim();
 
   if (cityName !== "") {
-    // Add the city name to the last location
+    // Adaugă numele orașului la ultima locație
     locations[locations.length - 1].name = cityName;
 
     sessionStorage.setItem("locations", JSON.stringify(locations));
 
-    // Reset the form
+    // Resetează formularul
     form.reset();
 
-    // Draw the updated map
+    // Desenează harta actualizată
     drawMap();
   }
 });
