@@ -130,6 +130,23 @@ form {
     transition: all 0.3s ease; }
     .trip-item .delete-button:hover {
       background-color: #cc0000; }
+  .trip-item .edit-button {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background-color: #3366cc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease; }
+    .trip-item .edit-button:hover {
+      background-color: #2952a3; }
   .trip-item .add-button {
     cursor: pointer;
     position: absolute;

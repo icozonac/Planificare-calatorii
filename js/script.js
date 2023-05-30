@@ -8,8 +8,11 @@ function calculateTripDuration(startDate, endDate) {
 }
 
 function formatDate(date) {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(date).toLocaleDateString(undefined, options);
+  const dateObject = new Date(date);
+  const year = dateObject.getFullYear();
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+  const day = dateObject.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function saveTripToLocalStorage(trip) {
@@ -55,7 +58,6 @@ function validateForm(destination, startDate, endDate) {
   const selectedEndDate = new Date(endDate);
 
   if (selectedStartDate > selectedEndDate) {
-    
     return false; // Data de sfârșit este anterioară datei de început
   }
 
@@ -131,7 +133,10 @@ function addTripToDOM(trip) {
     trip.transport.transportType &&
     trip.transport.transportDetails
   ) {
-    tripDetails += `<p>Transport: ${trip.transport.transportType}</p>`;
+    if (trip.transport.transportType === "null") {
+      tripDetails += `<p>Transport: No transport</p>`;
+    } else tripDetails += `<p>Transport: ${trip.transport.transportType}</p>`;
+
     tripDetails += `<p>Transport Details: ${trip.transport.transportDetails}</p>`;
   }
 
@@ -140,6 +145,7 @@ function addTripToDOM(trip) {
   }
 
   tripDetails += `<button class="delete-button" data-id="${trip.id}">X</button>`;
+  tripDetails += `<button class="edit-button" data-id="${trip.id}">Edit</button>`;
 
   tripItem.innerHTML = tripDetails;
   tripList.appendChild(tripItem);
@@ -166,10 +172,109 @@ function deleteTrip(event) {
   }
 }
 
+function updateTripInLocalStorage(trip) {
+  let trips = JSON.parse(localStorage.getItem("trips"));
+
+  if (trips) {
+    const tripIndex = trips.findIndex((t) => t.id === trip.id);
+
+    if (tripIndex !== -1) {
+      trips[tripIndex] = trip;
+      localStorage.setItem("trips", JSON.stringify(trips));
+    }
+  }
+}
+
+function editTrip(event) {
+  if (event.target.classList.contains("edit-button")) {
+    const tripId = event.target.dataset.id;
+    const trips = loadTripsFromLocalStorage();
+
+    // Găsește călătoria cu id-ul tripId în lista de călătorii
+    const trip = trips.find((trip) => trip.id === Number(tripId));
+
+    if (!trip) {
+      alert("Vă rugăm să completați toate câmpurile corect.");
+      return;
+    }
+
+    // Populează formularul cu datele călătoriei existente
+    const destinationInput = document.getElementById("destination-input");
+    const startDateInput = document.getElementById("start-date-input");
+    const endDateInput = document.getElementById("end-date-input");
+    const transportTypeInput = document.getElementById("transport-input");
+    const transportDetailsInput = document.getElementById(
+      "transport-details-input"
+    );
+    const otherInfoInput = document.getElementById("other-info-input");
+
+    destinationInput.value = trip.destination;
+    startDateInput.value = trip.startDate;
+    endDateInput.value = trip.endDate;
+
+    if (trip.transport) {
+      transportTypeInput.value = trip.transport.transportType;
+      transportDetailsInput.value = trip.transport.transportDetails;
+    } else {
+      transportTypeInput.value = "null";
+      transportDetailsInput.value = "";
+    }
+
+    if (trip.info) {
+      otherInfoInput.value = trip.info.otherInfo;
+    } else {
+      otherInfoInput.value = "";
+    }
+
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.classList.add("save-button");
+
+    saveButton.addEventListener("click", function () {
+      // Updatează călătoria cu noile valori
+      trip.destination = destinationInput.value;
+      trip.startDate = startDateInput.value;
+      trip.endDate = endDateInput.value;
+      trip.duration = calculateTripDuration(trip.startDate, trip.endDate);
+      trip.transport = Transport.create(
+        transportTypeInput.value,
+        transportDetailsInput.value
+      );
+      trip.info = Info.create(otherInfoInput.value);
+
+      if (validateForm(trip.destination, trip.startDate, trip.endDate)) {
+        updateTripInLocalStorage(trip);
+
+        renderTrips();
+
+        // Curăță valorile de intrare ale formularului
+        destinationInput.value = "";
+        startDateInput.value = "";
+        endDateInput.value = "";
+        transportTypeInput.value = "null";
+        transportDetailsInput.value = "";
+        otherInfoInput.value = "";
+
+        // Șterge butonul de salvare din formular
+        saveButton.remove();
+      }
+    });
+
+    // Adaugă butonul de salvare în formular
+    const travelForm = document.getElementById("travel-form");
+    if (!travelForm.querySelector(".save-button")) {
+      travelForm.appendChild(saveButton);
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Adăugare eveniment pentru ștergerea unei călătorii
+  // Adaugă eveniment pentru ștergerea unei călătorii
   const travelList = document.getElementById("travel-list");
   travelList.addEventListener("click", deleteTrip);
+
+  // Adaugă eveniment pentru editarea unei călătorii
+  travelList.addEventListener("click", editTrip);
 
   // Exemplu de utilizare
   const travelForm = document.getElementById("travel-form");
@@ -198,12 +303,14 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const trip = Trip.create(destination, startDate, endDate);
-    const transport = Transport.create(transportType, transportDetails);
-    const info = Info.create(otherInfo);
-
-    trip.transport = transport;
-    trip.info = info;
+    const trip = Trip.create(
+      destination,
+      startDate,
+      endDate,
+      transportType,
+      transportDetails,
+      otherInfo
+    );
 
     saveTripToLocalStorage(trip);
     addTripToDOM(trip);
@@ -216,12 +323,20 @@ document.addEventListener("DOMContentLoaded", function () {
     otherInfoInput.value = "";
   });
 
-  // Încărcare călătorii salvate din localStorage la încărcarea paginii
+  // Încarcă călătoriile salvate din localStorage la încărcarea paginii
   if (!localStorage.getItem("trips")) {
     localStorage.setItem("trips", JSON.stringify([]));
   }
+
+  renderTrips();
+});
+
+function renderTrips() {
+  const tripList = document.getElementById("travel-list");
+  tripList.innerHTML = "";
+
   const savedTrips = loadTripsFromLocalStorage();
-  savedTrips.forEach(function (trip) {
+  savedTrips.forEach((trip) => {
     addTripToDOM(trip);
   });
-});
+}
