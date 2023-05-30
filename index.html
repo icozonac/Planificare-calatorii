@@ -502,11 +502,15 @@
     </main>
 
     <div id="map">
+      <h2>Desenează traseul dorit</h2>
       <canvas id="mapCanvas" width="600" height="400"></canvas>
       <form id="cityForm">
         <label for="cityName">Nume oraș:</label>
         <input type="text" id="cityName" required />
-        <button type="submit">Adaugă oraș</button>
+        <div style="display: flex; justify-content: space-between">
+          <button type="submit">Adaugă oraș</button>
+          <button type="button" id="resetButton">Resetare hartă</button>
+        </div>
       </form>
     </div>
 

@@ -105,3 +105,16 @@ form.addEventListener("submit", (event) => {
     drawMap();
   }
 });
+
+// Adaugă un buton de resetare
+const resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click", () => {
+  // Resetează lista de locații
+  locations = [];
+
+  // Resetează sesiunea de stocare
+  sessionStorage.removeItem("locations");
+
+  // Desenează harta goală
+  drawMap();
+});

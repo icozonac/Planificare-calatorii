@@ -1,5 +1,4 @@
 // Funcții JavaScript
-
 function calculateTripDuration(startDate, endDate) {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -56,6 +55,7 @@ function validateForm(destination, startDate, endDate) {
   const selectedEndDate = new Date(endDate);
 
   if (selectedStartDate > selectedEndDate) {
+    
     return false; // Data de sfârșit este anterioară datei de început
   }
 
